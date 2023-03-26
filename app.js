@@ -91,19 +91,19 @@ app.get('/delete-by-username/:username', (req, res) => {
     })
 });
 
-app.post('/edit-user', (req, res) => {
+app.post('/register', (req, res) => {
 
     pool.getConnection((err, connection) => {
         if(err) throw err
         console.log(`connected as id ${connection.threadId}`)
 
-        const {fullname,username} = req.body 
+        const params = req.body
 
-        connection.query('UPDATE user SET fullname = ? WHERE username = ?', [fullname,username] , (err, rows) => {
+        connection.query('INSERT INTO user SET ?', params , (err, rows) => {
             connection.release() // return the connection to pool
 
             if(!err) {
-                res.send(`Username with the name: ${username} has been added.`)
+                res.send(`name: ${params.username} has been added.`)
             } else {
                 console.log(err)
             }
@@ -131,7 +131,31 @@ app.post('/login', (req, res) => {
             }
 
             // if(err) throw err
-            console.log('The data from beer table are: \n', rows)
+            console.log('The data from user table are: \n', rows)
+        })
+
+        console.log(req.body)
+    })
+})
+
+app.post('/test-register', (req, res) => {
+
+    pool.getConnection((err, connection) => {
+        if(err) throw err
+        console.log(`connected as id ${connection.threadId}`)
+
+        const {username,password} = req.body 
+        connection.query('SELECT * FROM user WHERE username = ? AND password = ?', [username,password] , (err, rows) => {
+            connection.release() // return the connection to pool
+
+            if (!err) {
+                res.send(rows)
+            } else {
+                console.log(err)
+            }
+
+            // if(err) throw err
+            console.log('The data from user table are: \n', rows)
         })
 
         console.log(req.body)
