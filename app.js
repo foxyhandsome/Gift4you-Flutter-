@@ -21,7 +21,7 @@ const pool  = mysql.createPool({
 })
 
 // Get all beers
-app.get('/get-user', (req, res) => {
+app.get('b', (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) throw err
         // console.log('connected as username ' + connection.threadId)
@@ -113,5 +113,30 @@ app.post('/edit-user', (req, res) => {
         console.log(req.body)
     })
 })
+
+app.post('/login', (req, res) => {
+
+    pool.getConnection((err, connection) => {
+        if(err) throw err
+        console.log(`connected as id ${connection.threadId}`)
+
+        const {username,password} = req.body 
+        connection.query('SELECT * FROM user WHERE username = ? AND password = ?', [username,password] , (err, rows) => {
+            connection.release() // return the connection to pool
+
+            if (!err) {
+                res.send(rows)
+            } else {
+                console.log(err)
+            }
+
+            // if(err) throw err
+            console.log('The data from beer table are: \n', rows)
+        })
+
+        console.log(req.body)
+    })
+})
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
