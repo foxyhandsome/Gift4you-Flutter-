@@ -39,7 +39,7 @@ app.get('b', (req, res) => {
             }
 
             // if(err) throw err
-            console.log('The data from beer table are: \n', rows)
+            console.log('The data from user table are: \n', rows)
         })
     })
 })
@@ -58,7 +58,7 @@ app.get('/get-user-role', (req, res) => {
             }
 
             // if(err) throw err
-            console.log('The data from beer table are: \n', rows)
+            console.log('The data from user_role table are: \n', rows)
         })
     })
 })
@@ -74,7 +74,7 @@ app.get('/get-user-byusername/:username', (req, res) => {
                 console.log(err)
             }
             
-            console.log('The data from beer table are: \n', rows)
+            console.log('The data from user table are: \n', rows)
         })
     })
 });
@@ -90,7 +90,7 @@ app.get('/delete-by-username/:username', (req, res) => {
                 console.log(err)
             }
             
-            console.log('The data from beer table are: \n', rows)
+            console.log('The data from user table are: \n', rows)
         })
     })
 });
@@ -107,7 +107,7 @@ app.post('/register', (req, res) => {
             connection.release() // return the connection to pool
 
             if(!err) {
-                res.send(`name: ${params.username} has been added.`)
+                res.send(`register: ${params.username} has been added.`)
             } else {
                 console.log(err)
             }
@@ -154,7 +154,7 @@ app.post('/insert-product', (req, res) => {
             connection.release() // return the connection to pool
 
             if(!err) {
-                res.send(`name: ${params.username} has been added.`)
+                res.send(`product: ${params.username} has been added.`)
             } else {
                 console.log(err)
             }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2023 at 02:19 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Mar 28, 2023 at 02:29 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ USE `gift4you`;
 CREATE TABLE `category` (
   `category_id` int(5) NOT NULL,
   `category_name` varchar(150) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE `category` (
 CREATE TABLE `in_category` (
   `category_id` int(5) DEFAULT NULL,
   `product_id` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -53,13 +53,13 @@ CREATE TABLE `in_category` (
 
 CREATE TABLE `market` (
   `market_id` int(10) NOT NULL,
-  `market_picture` varchar(255) DEFAULT NULL,
+  `market_picture` longtext DEFAULT NULL,
   `market_name` varchar(100) DEFAULT NULL,
   `market_tel` varchar(10) DEFAULT NULL,
   `market_address` varchar(150) DEFAULT NULL,
   `market_detail` varchar(300) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `market`
@@ -76,12 +76,12 @@ INSERT INTO `market` (`market_id`, `market_picture`, `market_name`, `market_tel`
 
 CREATE TABLE `product` (
   `product_id` int(10) NOT NULL,
-  `picture` mediumblob DEFAULT NULL,
+  `picture` longtext DEFAULT NULL,
   `product_price` varchar(100) NOT NULL,
   `product_name` varchar(300) NOT NULL,
   `product_detail` varchar(300) DEFAULT NULL,
   `market_id` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ CREATE TABLE `review` (
   `review_reply` varchar(100) DEFAULT NULL,
   `star` int(1) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `user` (
   `tel` varchar(10) DEFAULT NULL,
   `role_id` varchar(1) DEFAULT NULL,
   `user_type` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
@@ -135,7 +135,7 @@ INSERT INTO `user` (`username`, `password`, `gender`, `fullname`, `email`, `tel`
 CREATE TABLE `user_role` (
   `role_id` varchar(1) NOT NULL,
   `role_name` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user_role`
@@ -219,7 +219,7 @@ ALTER TABLE `market`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `product_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `review`
