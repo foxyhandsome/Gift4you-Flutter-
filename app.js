@@ -165,5 +165,28 @@ app.post('/insert-product', (req, res) => {
     })
 })
 
+app.post('/list-product', (req, res) => {
+
+    pool.getConnection((err, connection) => {
+        if(err) throw err
+        console.log(`connected as id ${connection.threadId}`)
+
+        const {username} = req.body 
+        connection.query('SELECT TOP 10 * FROM product,user WHERE username = ?', [username] , (err, rows) => {
+            connection.release() // return the connection to pool
+
+            if (!err) {
+                res.send(rows)
+            } else {
+                console.log(err)
+            }
+
+            // if(err) throw err
+            console.log('The data from product table are: \n', rows)
+        })
+
+        console.log(req.body)
+    })
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
