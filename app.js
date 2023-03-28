@@ -138,24 +138,23 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.post('/test-register', (req, res) => {
+app.post('/insert-product', (req, res) => {
 
     pool.getConnection((err, connection) => {
         if(err) throw err
         console.log(`connected as id ${connection.threadId}`)
 
-        const {username,password} = req.body 
-        connection.query('SELECT * FROM user WHERE username = ? AND password = ?', [username,password] , (err, rows) => {
+        const params = req.body
+
+        connection.query('INSERT INTO product SET ?', params , (err, rows) => {
             connection.release() // return the connection to pool
 
-            if (!err) {
-                res.send(rows)
+            if(!err) {
+                res.send(`name: ${params.username} has been added.`)
             } else {
                 console.log(err)
             }
 
-            // if(err) throw err
-            console.log('The data from user table are: \n', rows)
         })
 
         console.log(req.body)
