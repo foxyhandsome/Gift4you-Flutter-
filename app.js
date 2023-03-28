@@ -172,7 +172,7 @@ app.post('/list-product', (req, res) => {
         console.log(`connected as id ${connection.threadId}`)
 
         const {username} = req.body 
-        connection.query('SELECT TOP 10 * FROM product,user WHERE username = ?', [username] , (err, rows) => {
+        connection.query('SELECT  * FROM product,user WHERE username = ?', [username] , (err, rows) => {
             connection.release() // return the connection to pool
 
             if (!err) {
