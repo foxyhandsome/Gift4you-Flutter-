@@ -166,27 +166,38 @@ app.post('/insert-product', (req, res) => {
 })
 
 app.post('/list-product', (req, res) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      const { username } = req.body;
+      const sql = "SELECT * FROM product ORDER BY product_price DESC LIMIT 10";
+      connection.query(sql, (err, rows) => {
+        connection.release(); // return the connection to pool
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error retrieving data from database");
+        } else {
+          console.log('The data from product table are: \n', rows);
+          res.status(200).send(rows);
+        }
+      });
+      console.log(req.body);
+    });
+  });
 
+  app.get('/get-product-byusername/:username', (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) throw err
-        console.log(`connected as id ${connection.threadId}`)
-
-        const {username} = req.body 
-        connection.query('SELECT  * FROM product,user WHERE username = ?', [username] , (err, rows) => {
+        connection.query('SELECT * FROM user JOIN market ON user.username = market.username JOIN product ON market.market_id = product.market_id WHERE user.username = ?', [req.params.username], (err, rows) => {
             connection.release() // return the connection to pool
-
             if (!err) {
                 res.send(rows)
             } else {
                 console.log(err)
             }
-
-            // if(err) throw err
-            console.log('The data from product table are: \n', rows)
+            
+            console.log('The data from user table are: \n', rows)
         })
-
-        console.log(req.body)
     })
-})
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
